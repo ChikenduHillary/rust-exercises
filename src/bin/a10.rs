@@ -12,4 +12,23 @@
 // * Use a match expression to determine which message
 //   to print
 
-fn main() {}
+fn check_value(is_greater_than_100: bool) {
+    match is_greater_than_100 {
+        true => println!("greater than 100"),
+        false => println!("less than or equal to 100")
+    }
+}
+
+fn main() {
+    let number = 100;
+
+    let is_greater_than_100 = if number > 100 {
+        true
+    } else if number <= 100 {
+        false
+    } else {
+        false
+    };
+
+    check_value(is_greater_than_100);
+}
