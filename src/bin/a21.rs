@@ -25,4 +25,6 @@ fn find_user(name: &str) -> Option<i32> {
     }
 }
 
-fn main() {}
+fn main() {
+   find_user("am").map(|id| User {user_id: id, name: "sam".to_owned()}).map(|user| println!("{:?}", user)).unwrap_or(println!("not found"))
+}
