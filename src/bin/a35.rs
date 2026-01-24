@@ -54,4 +54,60 @@ enum Tile {
     Wood,
 }
 
-fn main() {}
+fn print_tile(tile: Tile) {
+    use Tile::*;
+
+    match tile {
+        //   * Bricks:
+        //   * Colored bricks should print "The brick color is [color]"
+        //   * Other bricks should print "[Bricktype] brick"
+        Brick(brick @ BrickStyle::Gray | brick @ BrickStyle::Red) => {
+            println!("The brick color is {:?}", brick)
+        }
+        Brick(brick @ BrickStyle::Dungeon) => println!("{brick:?} brick"),
+
+        // * Water:
+        //   * Pressure levels 10 and over should print "High water pressure!"
+        //   * Pressure levels under 10 should print "Water pressure level: [Pressure]"
+        Water(pressure) if pressure.0 >= 10 => println!("High water pressure"),
+        Water(pressure) if pressure.0 < 10 => println!("Water pressure level: {}", pressure.0),
+
+        // * Grass, Dirt, and Sand should all print "Ground tile"
+        Dirt | Sand | Grass => println!("Ground title"),
+
+        // * Treasure Chests:
+        //   * If the treasure is Gold and the amount is at least 100, print "Lots of gold!"
+        Treasure(TreasureChest {
+            amount,
+            content: TreasureItem::Gold,
+        }) if amount >= 100 => println!("Lots of gold"),
+
+        _ => println!("Anything else"),
+    }
+}
+
+fn main() {
+    let tile = Tile::Brick(BrickStyle::Gray);
+    print_tile(tile);
+
+    let tile = Tile::Brick(BrickStyle::Dungeon);
+    print_tile(tile);
+
+    let tile = Tile::Water(Pressure(100));
+    print_tile(tile);
+
+    let tile = Tile::Water(Pressure(8));
+    print_tile(tile);
+
+    let tile = Tile::Dirt;
+    print_tile(tile);
+
+    let tile = Tile::Treasure(TreasureChest {
+        content: TreasureItem::Gold,
+        amount: 200,
+    });
+    print_tile(tile);
+
+    let tile = Tile::Wood;
+    print_tile(tile);
+}

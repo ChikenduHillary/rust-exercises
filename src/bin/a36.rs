@@ -14,7 +14,19 @@ fn data() -> &'static [u64] {
     &[5, 5, 4, 4, 3, 3, 1]
 }
 
+fn process_chunck(slice: &[u64]) {
+    match slice {
+        [lhs, rhs] => println!("{}+{}={}", lhs, rhs, lhs + rhs),
+        [single] => println!("{}", single),
+        [] => println!("Data stream complete"),
+        [..] => unreachable!("chunk size should be at most 2"),
+    }
+}
+
 fn main() {
     // `stream` is an iterator of Option<&[u64]>
-    let mut stream = data().chunks(2);
+    let mut stream = data().chunks(3);
+    for chunk in stream {
+        process_chunck(chunk);
+    }
 }
