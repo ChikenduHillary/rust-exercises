@@ -9,3 +9,5 @@ path="src/activitylib.rs"
 
 [dependencies]
 thiserror = "2.0.17"
+crossbeam-channel = "*"
+colored = "*"
